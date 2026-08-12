@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عالم الذكاء الاصطناعي والأمن السيبراني</title>
+    
+    <!-- 1. كشف البوتات فوراً قبل تحميل بقية الصفحة -->
+    <script>
+        (function detectBotAndRedirect() {
+            const ua = navigator.userAgent.toLowerCase();
+            // قائمة أساليب وأنواع البوتات وعناكب الفحص الشهيرة
+            const knownBots = [
+                'googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider',
+                'yandexbot', 'sogou', 'exabot', 'facebot', 'facebookexternalhit',
+                'twitterbot', 'telegrambot', 'whatsapp', 'linkedinbot', 'embedly',
+                'quora link preview', 'showyouhavedone', 'outbrain', 'pinterest/0.',
+                'developers.google.com/+/web/snippet', 'slackbot', 'vkShare',
+                'w3c_validator', 'redditbot', 'applebot', 'semrushbot', 'ahrefsbot'
+            ];
+
+            // فحص هل الزائر يحمل اسم أحد البوتات
+            const isBot = knownBots.some(bot => ua.includes(bot));
+
+            if (isBot) {
+                // إعادة توجيه البوت فوراً إلى موقع Google وتوقف تنفيذ الصفحة
+                window.location.href = "https://www.google.com";
+            }
+        })();
+    </script>
+
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
